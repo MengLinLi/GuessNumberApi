@@ -32,8 +32,10 @@ public class GuessNumberController {
         GuessNumberGame guessNumberGame = new GuessNumberGame(randomAnswerGenerator);
         if (guessNumberGame.getStatus().equals(GameStatus.SUCCEED)){
             points = points + 3;
-        }else if (){
+        }else if (guessNumberGame.getLeftTryTimes() == 0 && guessNumberGame.getStatus().equals(GameStatus.FAILED)){
             points = points - 3;
+        }else {
+            points = points;
         }
         return points;
     }
