@@ -4,6 +4,8 @@ import com.twschool.practice.domain.GameStatus;
 import com.twschool.practice.domain.GuessNumberGame;
 import com.twschool.practice.domain.RandomAnswerGenerator;
 import com.twschool.practice.domain.User;
+import com.twschool.practice.service.CalculatePointsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +18,8 @@ import java.util.Map;
 @RestController("")
 public class GuessNumberController {
 
+    @Autowired
+    private CalculatePointsService calculatePointsService;
 
     @GetMapping("/game")
     public Map<String,String> game(@RequestParam String guess){
@@ -79,6 +83,20 @@ public class GuessNumberController {
 
     @GetMapping("/calculatePoints")
     public int calculatePoints(@RequestParam User user, @RequestParam String guess){
+        int points = 0;
+        List<String> userAnswerNumber = Arrays.asList(guess.split(" "));
+        RandomAnswerGenerator randomAnswerGenerator = new RandomAnswerGenerator();
+        GuessNumberGame guessNumberGame = new GuessNumberGame(randomAnswerGenerator);
+        for (int i=0;i<user.getPlayTimes();i++){
+            String result = guessNumberGame.guess(userAnswerNumber);
+            calculatePointsService.isContinueWin(result);
+            if (guessNumberGame.getStatus().equals(GameStatus.SUCCEED)){
+                points = calculatePointsService.addPoint();
+            }else if (guessNumberGame.getStatus().equals(GameStatus.FAILED)){
+                points = calculatePointsService.subPoint();
+            }
+        }
+        return points;
 
     }
 }

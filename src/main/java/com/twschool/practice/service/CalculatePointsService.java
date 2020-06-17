@@ -1,10 +1,13 @@
 package com.twschool.practice.service;
 
-public class CalculatePointsService {
-    private int continueWinCount = 0;
-    private int points = 0;
+import org.springframework.stereotype.Service;
 
-    public void addPoint() {
+@Service
+public class CalculatePointsService {
+    private static int continueWinCount = 0;
+    private static int points = 0;
+
+    public int addPoint() {
         points = points + 3;
         if (continueWinCount % 3 == 0){
             points = points + 2;
@@ -12,15 +15,19 @@ public class CalculatePointsService {
         if (continueWinCount % 5 == 0){
             points = points + 3;
         }
+        return points;
     }
 
-    public void subPoint() {
+    public int subPoint() {
         points = points - 3;
+        return points;
     }
 
     public void isContinueWin(String result){
         if (result.equals("4A0B")){
             continueWinCount ++;
+        }else {
+            continueWinCount = 0;
         }
     }
 
