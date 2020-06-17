@@ -30,6 +30,7 @@ public class GuessNumberController {
         List<String> userAnswerNumber = Arrays.asList(guess.split(" "));
         RandomAnswerGenerator randomAnswerGenerator = new RandomAnswerGenerator();
         GuessNumberGame guessNumberGame = new GuessNumberGame(randomAnswerGenerator);
+        guessNumberGame.guess(userAnswerNumber);
         if (guessNumberGame.getStatus().equals(GameStatus.SUCCEED)){
             points = points + 3;
         }else if (guessNumberGame.getLeftTryTimes() == 0 && guessNumberGame.getStatus().equals(GameStatus.FAILED)){
@@ -39,6 +40,27 @@ public class GuessNumberController {
         }
         return points;
     }
+
+    @GetMapping("/onegame")
+    public int onegame(){
+        int points = 0;
+        RandomAnswerGenerator randomAnswerGenerator = new RandomAnswerGenerator();
+        GuessNumberGame guessNumberGame = new GuessNumberGame(randomAnswerGenerator);
+        for (int i=0; i<guessNumberGame.getMAX_TRY_TIMES();i++){
+            guessNumberGame.guess(userAnswerNumber);
+            if (guessNumberGame.getStatus().equals(GameStatus.SUCCEED)){
+                points = points + 3;
+            }else if (guessNumberGame.getLeftTryTimes() == 0 && guessNumberGame.getStatus().equals(GameStatus.FAILED)){
+                points = points - 3;
+            }else {
+                points = points;
+            }
+        }
+        return points;
+
+    }
+
+
 
 
 }

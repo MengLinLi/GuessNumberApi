@@ -43,4 +43,8 @@ public class GuessNumberGame {
     public int getLeftTryTimes(){
         return leftTryTimes;
     }
+
+    public int getMAX_TRY_TIMES(){
+        return MAX_TRY_TIMES;
+    }
 }
