@@ -76,4 +76,9 @@ public class GuessNumberController {
         }
         return user.getTotalPoints();
     }
+
+    @GetMapping("/calculatePoints")
+    public int calculatePoints(@RequestParam User user, @RequestParam String guess){
+
+    }
 }
