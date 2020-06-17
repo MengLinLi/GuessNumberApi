@@ -1,7 +1,5 @@
 package com.twschool.practice.domain;
 
-import com.twschool.practice.domain.GameStatus;
-
 import java.util.List;
 
 public class GuessNumberGame {
@@ -16,13 +14,6 @@ public class GuessNumberGame {
         this.answer = randomAnswerGenerator.generateAnswer();
     }
 
-    public String guess(List<String> userAnswerNumbers) {
-        String result = answer.check(userAnswerNumbers);
-        decreaseTryTimes();
-        modifyStatus(result);
-        return result;
-    }
-
     private void modifyStatus(String result) {
         boolean noTryTimes = leftTryTimes == 0;
         if (noTryTimes) {
@@ -34,11 +25,22 @@ public class GuessNumberGame {
         }
     }
 
+    public String guess(List<String> userAnswerNumbers) {
+        String result = answer.check(userAnswerNumbers);
+        decreaseTryTimes();
+        modifyStatus(result);
+        return result;
+    }
+
     private void decreaseTryTimes() {
         leftTryTimes --;
     }
 
     public GameStatus getStatus() {
         return status;
+    }
+
+    public int getLeftTryTimes(){
+        return leftTryTimes;
     }
 }
