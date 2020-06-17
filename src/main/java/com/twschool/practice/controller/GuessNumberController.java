@@ -76,8 +76,4 @@ public class GuessNumberController {
         }
         return user.getTotalPoints();
     }
-
-
-
-
 }
