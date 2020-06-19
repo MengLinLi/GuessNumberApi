@@ -149,9 +149,9 @@ public class GuessNumberController {
     }
 
     @GetMapping("/continueWinThree")
-    public Map<String,Integer> continueWinThree(){
+    public Map<String,Integer> continueWinThree(int times){
         User user = new User();
-        for (int i=0;i<3;i++){
+        for (int i=0;i<times;i++){
             oneGuess(user, "1 2 3 4");
         }
         Map<String,Integer> map = new HashMap<>();
