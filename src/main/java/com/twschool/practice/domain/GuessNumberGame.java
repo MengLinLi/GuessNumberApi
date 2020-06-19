@@ -14,6 +14,11 @@ public class GuessNumberGame {
         this.answer = randomAnswerGenerator.generateAnswer();
     }
 
+    public GuessNumberGame(Answer answer) {
+        this.randomAnswerGenerator = randomAnswerGenerator;
+        this.answer = answer;
+    }
+
     private void modifyStatus(String result) {
         boolean noTryTimes = leftTryTimes == 0;
         if (noTryTimes) {

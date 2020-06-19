@@ -1,19 +1,13 @@
 package com.twschool.practice.controller;
 
-import com.twschool.practice.domain.GameStatus;
-import com.twschool.practice.domain.GuessNumberGame;
-import com.twschool.practice.domain.RandomAnswerGenerator;
-import com.twschool.practice.domain.User;
+import com.twschool.practice.domain.*;
 import com.twschool.practice.service.CalculatePointsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController("")
 public class GuessNumberController {
@@ -72,15 +66,16 @@ public class GuessNumberController {
         user.setTotalPoints(0);
         List<String> userAnswerNumber = Arrays.asList(guess.split(" "));
         RandomAnswerGenerator randomAnswerGenerator = new RandomAnswerGenerator();
-        GuessNumberGame guessNumberGame = new GuessNumberGame(randomAnswerGenerator);
+        Answer answer = new Answer(Arrays.asList("1 2 3 4".split(" ")));
+        GuessNumberGame guessNumberGame = new GuessNumberGame(answer);
         guessNumberGame.guess(userAnswerNumber);
         if (guessNumberGame.getStatus().equals(GameStatus.SUCCEED)){
             user.setTotalPoints(user.getTotalPoints()+3);
-        }else if (guessNumberGame.getStatus().equals(GameStatus.FAILED)){
+        }else {
             user.setTotalPoints(user.getTotalPoints()-3);
         }
         Map<String,Integer> map = new HashMap<>();
-        map.put("totalPoint",3);
+        map.put("totalPoint",user.getTotalPoints());
         return map;
     }
 
