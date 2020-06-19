@@ -52,9 +52,21 @@ public class GuessNumberControllerTest {
     @Test
     public void should_return_11_when_win_3() throws Exception{
         mockMvc.perform(MockMvcRequestBuilders.get("/continueWinThree")
-                .contentType(MediaType.APPLICATION_JSON))
+                .contentType(MediaType.APPLICATION_JSON)
+                .param("times", "3"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.totalPoint").value(11));
     }
+
+    @Test
+    public void should_return_20_when_win_5() throws Exception{
+        mockMvc.perform(MockMvcRequestBuilders.get("/continueWinThree")
+                .contentType(MediaType.APPLICATION_JSON)
+                .param("times", "5"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.totalPoint").value(20));
+    }
+
+
 
 }
