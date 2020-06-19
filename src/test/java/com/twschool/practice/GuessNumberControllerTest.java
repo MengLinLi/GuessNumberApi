@@ -39,10 +39,5 @@ public class GuessNumberControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.totalPoint").value(3));
     }
 
-    @Test
-    public void s(){
-
-    }
-
 
 }

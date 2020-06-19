@@ -63,7 +63,7 @@ public class GuessNumberController {
     @GetMapping("/oneGuessByOneUser")
     public Map<String,Integer> oneGuessByOneUser( @RequestParam String guess){
         User user = new User();
-        user.setTotalPoints(0);
+        //user.setTotalPoints(0);
         List<String> userAnswerNumber = Arrays.asList(guess.split(" "));
         RandomAnswerGenerator randomAnswerGenerator = new RandomAnswerGenerator();
         Answer answer = new Answer(Arrays.asList("1 2 3 4".split(" ")));
@@ -71,8 +71,10 @@ public class GuessNumberController {
         guessNumberGame.guess(userAnswerNumber);
         if (guessNumberGame.getStatus().equals(GameStatus.SUCCEED)){
             user.setTotalPoints(user.getTotalPoints()+3);
+            user.setContinueWinCount(user.getContinueWinCount()+1);
         }else {
             user.setTotalPoints(user.getTotalPoints()-3);
+            user.setContinueWinCount(0);
         }
         Map<String,Integer> map = new HashMap<>();
         map.put("totalPoint",user.getTotalPoints());
