@@ -7,7 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController("")
 public class GuessNumberController {
@@ -119,6 +122,41 @@ public class GuessNumberController {
         }
         return points;
 
+    }
+
+    public Map<String,Integer> oneGuess(@RequestParam User user, @RequestParam String guess){
+        List<String> userAnswerNumber = Arrays.asList(guess.split(" "));
+        RandomAnswerGenerator randomAnswerGenerator = new RandomAnswerGenerator();
+        Answer answer = new Answer(Arrays.asList("1 2 3 4".split(" ")));
+        GuessNumberGame guessNumberGame = new GuessNumberGame(answer);
+        guessNumberGame.guess(userAnswerNumber);
+        if (guessNumberGame.getStatus().equals(GameStatus.SUCCEED)){
+            user.setTotalPoints(user.getTotalPoints()+3);
+            user.setContinueWinCount(user.getContinueWinCount()+1);
+            if (user.getContinueWinCount() % 3 == 0){
+                user.setTotalPoints(user.getTotalPoints()+2);
+            }
+            if (user.getContinueWinCount() % 5 == 0){
+                user.setTotalPoints(user.getTotalPoints()+3);
+            }
+        }else {
+            user.setTotalPoints(user.getTotalPoints()-3);
+            user.setContinueWinCount(0);
+        }
+        Map<String,Integer> map = new HashMap<>();
+        map.put("totalPoint",user.getTotalPoints());
+        return map;
+    }
+
+    @GetMapping("/continueWinThree")
+    public Map<String,Integer> main(){
+        User user = new User();
+        for (int i=0;i<3;i++){
+            oneGuess(user, "1 2 3 4");
+        }
+        Map<String,Integer> map = new HashMap<>();
+        map.put("totalPoint",user.getTotalPoints());
+        return map;
     }
 
 
