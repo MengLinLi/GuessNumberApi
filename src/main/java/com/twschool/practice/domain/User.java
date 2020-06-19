@@ -4,6 +4,7 @@ public class User {
     private int UserId;
     private int playTimes;
     private int totalPoints;
+    private int continueWinCount;
 
     public int getUserId() {
         return UserId;
@@ -29,10 +30,20 @@ public class User {
         this.totalPoints = totalPoints;
     }
 
-    public User(int userId, int playTimes, int totalPoints) {
+    public int getContinueWinCount() {
+        return continueWinCount;
+    }
+
+    public void setContinueWinCount(int continueWinCount) {
+        this.continueWinCount = continueWinCount;
+    }
+
+
+    public User(int userId, int playTimes, int totalPoints, int continueWinCount) {
         UserId = userId;
         this.playTimes = playTimes;
         this.totalPoints = totalPoints;
+        this.continueWinCount = continueWinCount;
     }
 
     public User() {

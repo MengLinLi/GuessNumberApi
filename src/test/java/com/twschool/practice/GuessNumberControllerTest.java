@@ -33,11 +33,15 @@ public class GuessNumberControllerTest {
     public void should_return_3_when_win_1() throws Exception{
         mockMvc.perform(MockMvcRequestBuilders.get("/oneGuessByOneUser")
                 .contentType(MediaType.APPLICATION_JSON)
-                .param("totalPoints","0")
+                //.param("user", String.valueOf(new User(1,1,0,0)))
                 .param("guess", "1 2 3 4"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.input").value("1 2 3 4"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.result").value(3));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.totalPoint").value(3));
+    }
+
+    @Test
+    public void s(){
+
     }
 
 

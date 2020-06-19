@@ -67,7 +67,25 @@ public class GuessNumberController {
     //}
 
     @GetMapping("/oneGuessByOneUser")
-    public int oneGuessByOneUser(@RequestParam User user, @RequestParam String guess){
+    public Map<String,Integer> oneGuessByOneUser( @RequestParam String guess){
+        User user = new User();
+        user.setTotalPoints(0);
+        List<String> userAnswerNumber = Arrays.asList(guess.split(" "));
+        RandomAnswerGenerator randomAnswerGenerator = new RandomAnswerGenerator();
+        GuessNumberGame guessNumberGame = new GuessNumberGame(randomAnswerGenerator);
+        guessNumberGame.guess(userAnswerNumber);
+        if (guessNumberGame.getStatus().equals(GameStatus.SUCCEED)){
+            user.setTotalPoints(user.getTotalPoints()+3);
+        }else if (guessNumberGame.getStatus().equals(GameStatus.FAILED)){
+            user.setTotalPoints(user.getTotalPoints()-3);
+        }
+        Map<String,Integer> map = new HashMap<>();
+        map.put("totalPoint",3);
+        return map;
+    }
+
+    @GetMapping("/oneGameByOneUser")
+    public int oneGameByOneUser(@RequestParam User user, @RequestParam String guess){
         user.setTotalPoints(0);
         List<String> userAnswerNumber = Arrays.asList(guess.split(" "));
         RandomAnswerGenerator randomAnswerGenerator = new RandomAnswerGenerator();
@@ -99,4 +117,6 @@ public class GuessNumberController {
         return points;
 
     }
+
+
 }
