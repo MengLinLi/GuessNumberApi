@@ -39,5 +39,15 @@ public class GuessNumberControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.totalPoint").value(3));
     }
 
+    @Test
+    public void should_return_minus_3_when_lose_1() throws Exception{
+        mockMvc.perform(MockMvcRequestBuilders.get("/oneGuessByOneUser")
+                .contentType(MediaType.APPLICATION_JSON)
+                //.param("user", String.valueOf(new User(1,1,0,0)))
+                .param("guess", "1 2 3 5"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.totalPoint").value(-3));
+    }
+
 
 }
