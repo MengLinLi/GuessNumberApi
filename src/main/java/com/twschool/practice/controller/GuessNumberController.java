@@ -72,6 +72,12 @@ public class GuessNumberController {
         if (guessNumberGame.getStatus().equals(GameStatus.SUCCEED)){
             user.setTotalPoints(user.getTotalPoints()+3);
             user.setContinueWinCount(user.getContinueWinCount()+1);
+            if (user.getContinueWinCount() % 3 == 0){
+                user.setTotalPoints(user.getTotalPoints()+2);
+            }
+            if (user.getContinueWinCount() % 5 == 0){
+                user.setTotalPoints(user.getTotalPoints()+3);
+            }
         }else {
             user.setTotalPoints(user.getTotalPoints()-3);
             user.setContinueWinCount(0);
